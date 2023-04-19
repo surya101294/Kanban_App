@@ -1,7 +1,7 @@
 import axios from "axios"
 
 // -----------------------Kanban-------------------------------------------------------------
-const baseURL = `https://kanbanbackend.vercel.app`
+const baseURL = `https://vast-pear-nightingale-sari.cyclic.app/`
 // ------------------------GET----------------------------
 export const getBoardsApi = async () => {
     let res = await axios.get(`${baseURL}/getboard`, {
