@@ -1,4 +1,4 @@
-import { addboardApi, logApi, regApi } from "../api";
+import { logApi, regApi } from "../api";
 import { error, login, register } from "./user.actiontype";
 
 export const regFun = (data) => async (dispatch) => {
@@ -10,6 +10,7 @@ export const regFun = (data) => async (dispatch) => {
     dispatch({ type: error });
   }
 };
+
 export const logFun = (data) => async (dispatch) => {
   console.log('data:', data)
   try {

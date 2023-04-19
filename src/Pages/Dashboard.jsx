@@ -22,11 +22,12 @@ const Dashboard = () => {
     dispatch(getBoardfun());
     setStoreChanged(false);
   }
-  
-  
+
+
   // -----------------------------Add Board------------------------------------------
+
   const addboard = async (name) => {
-    if(name !=""){
+    if (name != "") {
       let obj = {
         name: name,
         task: [],
@@ -39,6 +40,7 @@ const Dashboard = () => {
     }
   };
   // -----------------------------Selecte Board---------------------------------------------
+
   const handleDivClick = (divid) => setSelectedDiv(divid);
   // -----------------------------Add Task to Selected Board---------------------------------------------
   let initialTask = {
@@ -47,41 +49,47 @@ const Dashboard = () => {
     status: "",
     subtask: []
   }
+
   const [task, setTask] = useState(initialTask);
   const handleChange = (e) => {
     setTask({ ...task, [e.target.name]: e.target.value });
   };
+
   const addTask = async () => {
-    if(task != initialTask){
-      setTask({...task,subtask:subtaskArr})
+    if (task != initialTask) {
+      setTask({ ...task, subtask: subtaskArr })
       let x = selectedDiv || data[0]._id
-      let result = await addtaskApi(x,task);
+      let result = await addtaskApi(x, task);
       setSubtaskArr([])
       getBoards()
     }
   };
+
   // -----------------------------Overlay---------------------------------------------
+
   const OverlayOne = () => (
     <ModalOverlay
-    bg='blackAlpha.200'
-    backdropFilter='blur(2px) hue-rotate(50deg)'
+      bg='blackAlpha.200'
+      backdropFilter='blur(2px) hue-rotate(50deg)'
     />
-    )
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    const [overlay, setOverlay] = React.useState(<OverlayOne />)
-    // ---------------------------------------------------------------------------
-    useEffect(() => {
-      if(!storeChanged){
-        getBoards()
-        setStoreChanged(true);
-      } 
-    }, [subtaskArr]);
-    // --------------------------------------
-  if(store.loading){
+  )
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [overlay, setOverlay] = React.useState(<OverlayOne />)
+  // ---------------------------------------------------------------------------
+
+  useEffect(() => {
+    if (!storeChanged) {
+      getBoards()
+      setStoreChanged(true);
+    }
+  }, [subtaskArr]);
+  // --------------------------------------
+  if (store.loading) {
     return (
       <Text>Loading......</Text>
     )
   }
+
   return (
     <div>
       <Box align="end" padding="10px 50px" border="1px solid blue">
@@ -96,12 +104,12 @@ const Dashboard = () => {
             <ModalCloseButton />
             <ModalBody>
               <form onSubmit={(e) => { e.preventDefault(); addTask(); }}
-              style={{ margin: "auto"}}> 
-                <Input m="5px 0px" onChange={handleChange} name="title" type="text" placeholder="Title" /> 
+                style={{ margin: "auto" }}>
+                <Input m="5px 0px" onChange={handleChange} name="title" type="text" placeholder="Title" />
                 <Input m="5px 0px" onChange={handleChange} name="description" type="text" placeholder="Description" />
                 <Box border="1px solid #e6e6e6">
-                  {subtaskArr && subtaskArr.map((el)=>(
-                    <Subtask {...el}/>
+                  {subtaskArr && subtaskArr.map((el) => (
+                    <Subtask {...el} />
                   ))}
                 </Box>
                 <SubtaskInput subtaskArr={subtaskArr} setSubtaskArr={setSubtaskArr} /> {/* Subtask Input */}
@@ -116,21 +124,21 @@ const Dashboard = () => {
           </ModalContent>
         </Modal>
       </Box>
-    <Box display="flex" border="1px solid red">
-      <Box w="20%" border="1px solid blue">
-        {data &&
-          data.map((el) => (
-            <Button key={el._id} onClick={()=>handleDivClick(el._id)} backgroundColor="#d8d6ff" color="black" display="flex" alignItems="center" justifyContent="center" height="50px" margin="10px 10px 10px 0px" w="85%" borderRadius="0px 20px 20px 0px" >
-              <Text>{el.name}</Text>
-            </Button>
-          ))}
-            <form onSubmit={(e)=>{e.preventDefault(); addboard(boardName)}} style={{ width: "100%", margin: "auto" }}>
-              <Input onChange={(e)=>setBoardName(e.target.value)} value={boardName} focusBorderColor="none" name="boardName" type="text" placeholder="Board Name"/>
-              <Button type="submit" w="100%">Add New Board</Button>
-            </form>
+      <Box display="flex" border="1px solid red">
+        <Box w="20%" border="1px solid blue">
+          {data &&
+            data.map((el) => (
+              <Button key={el._id} onClick={() => handleDivClick(el._id)} backgroundColor="#d8d6ff" color="black" display="flex" alignItems="center" justifyContent="center" height="50px" margin="10px 10px 10px 0px" w="85%" borderRadius="0px 20px 20px 0px" >
+                <Text>{el.name}</Text>
+              </Button>
+            ))}
+          <form onSubmit={(e) => { e.preventDefault(); addboard(boardName) }} style={{ width: "100%", margin: "auto" }}>
+            <Input onChange={(e) => setBoardName(e.target.value)} value={boardName} focusBorderColor="none" name="boardName" type="text" placeholder="Board Name" />
+            <Button type="submit" w="100%">Add New Board</Button>
+          </form>
+        </Box>
+        {data.length != 0 && <BoardData id={selectedDiv} />}
       </Box>
-            {data.length!=0 && <BoardData id={selectedDiv} />}
-    </Box>
     </div>
   );
 };

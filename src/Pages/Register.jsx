@@ -18,11 +18,13 @@ const Register = () => {
   const handleChange = (e) => {
     setReg({ ...reg, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = (e) => {
     dispatch(regFun(reg));
     e.preventDefault();
     navigate("/login");
   };
+
   return (
     <Box padding="50px">
       <form onSubmit={handleSubmit} style={{ width: "30%", margin: "auto" }}>

@@ -1,70 +1,232 @@
-# Getting Started with Create React App
+# Kanban Board (FullStack)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Backend Git hub link
+ https://github.com/surya101294/Train_Seating_Arrangement/tree/main
 
-## Available Scripts
+# TechStack
+ # Front-End
+- HTML
+- CSS
+- JavaScript
+- React
 
-In the project directory, you can run:
+# Back-End
+- NodeJS
+- Express
+- MongoDB
 
-### `npm start`
+# Front-End Deployment - Vercel
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# Back-End Deployment - Cyclic 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+# `**Problem Statement**`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- The objective is to build a [kanban board](https://en.wikipedia.org/wiki/Kanban_board) app where user can create and manage their tasks with subtasks on different boards.
+- The app should have a Navbar with the following routes
+    - Sign up - (/signup)
+    - Sign in - (/signin)
+    - Kanban Board - (/board)
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# `**Sign-up Route**`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- This user should be prompted by a signup form, where the user will enter the following credentials
+    - Email
+    - Password
+- On form submit store this credential in your backend using the route “**/signup**”.
+- Follow all the coding standards, hash the password using any encrypting library such as “**bcrypt**” before storing in database.
+- After signing up successfully, the user should be redirected to the Sign in route.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+# `**Sign-in Route**`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- This user should be prompted by a login form, where the user will enter the following credentials
+    - Email
+    - Password
+- On form submit, match the entered credentials with the data stored in your backend (Verify both email and password) using the backend route “**/login**”
+- On successful validation alert “**Login Successful**”, generate a token for the user using **jsonwebtoken** (store the token in localStorage**)**  and redirect the user to Dashboard page.
+- On entering wrong credential, alert “**Invalid Credentials**” and re-prompt the user to enter valid credentials.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# `**Kanban Dashboard**`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- The dashboard page should be a private route, only users who have signed in can access this route.
+- The first board should be created by default,
+- The user should be able to create new boards by clicking on “Create New Board” button which when clicked will open up a modal asking for the Board Name. **(optional)**
+- Each board will have three sub-categories :  Todo, Doing and Done, as shown in the reference image below.
 
-## Learn More
+![                                                                    Kanban Board Reference Image](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6de4690e-6952-4a4e-b9dd-33232ebb70c4/Kanban_Reference_Image.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+                                                                    Kanban Board Reference Image
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- The user should be able add task to  a board by clicking on the “Add New Task” button which will open up a modal with the following fields
+    - Task Name
+    - Description
+    - Subtasks (Should support multiple)
+    - Current Status (Select tag with Todo, Doing, Done as options)
+    - Create Task Button
 
-### Code Splitting
+![                                         Creating Task with Subtasks](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/72c781fb-d695-4bb4-b8ae-5cef661b59db/Kanban_Reference_Image_-_2.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+                                         Creating Task with Subtasks
 
-### Analyzing the Bundle Size
+- All the created tasks should be rendered in the form of cards with the number of subtasks displayed as shown in the Reference Image.
+- Clicking on any of these taks should open up a modal, where the user can mark the subtasks as completed and also can update the Current Status of the task.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![                                                    Update Tasks](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/077bdf67-5116-473e-9165-d668ed2fa3b9/Kanban_Reference_Image_-_3.png)
 
-### Making a Progressive Web App
+                                                    Update Tasks
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- The user should also be able to delete an existing task.
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+# `**Backend**`
 
-### Deployment
+The backend for Kanban Board should have the following models
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Board Model
 
-### `npm run build` fails to minify
+```yaml
+{
+ _id: ObjectId,
+  name: String,
+  tasks: [{ type: ObjectId, ref: 'Task'}]
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Task Model
+
+```yaml
+{
+ _id: ObjectId,
+	title : String,
+	description : String,
+	status : {type: String, enum: ['Todo', 'Doing', 'Done'], default: 'Todo'},
+	subtask : [{ type: ObjectId, ref: 'Subtask'}]
+}
+
+```
+
+- Subtask Model
+
+```yaml
+{
+ _id: ObjectId,
+	title : String,
+	isCompleted : boolean
+}
+```
+
+- Build API’s to create, read, update and delete boards, tasks and subtasks.
+
+# `**API Reference**`
+
+![                                                                  Model Schema Diagram](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4f8347e8-dd53-4f33-bc87-6a833277f35b/API_Reference_Image.png)
+
+                                                                  Model Schema Diagram
+
+```yaml
+{
+  "boards": [
+    {
+      "name": "Todo",
+      "tasks": [
+        {
+          "title": "Build UI for onboarding flow",
+          "description": "",
+          "status": "Todo",
+          "subtasks": [
+            {
+              "title": "Sign up page",
+              "isCompleted": true
+            },
+            {
+              "title": "Sign in page",
+              "isCompleted": false
+            },
+            {
+              "title": "Welcome page",
+              "isCompleted": false
+            }
+          ]
+        },
+        {
+          "title": "Build UI for search",
+          "description": "",
+          "status": "Todo",
+          "subtasks": [
+            {
+              "title": "Search page",
+              "isCompleted": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Doing",
+      "tasks": [
+        {
+          "title": "Design settings and search pages",
+          "description": "",
+          "status": "Doing",
+          "subtasks": [
+            {
+              "title": "Settings - Account page",
+              "isCompleted": true
+            },
+            {
+              "title": "Settings - Billing page",
+              "isCompleted": true
+            },
+            {
+              "title": "Search page",
+              "isCompleted": false
+            }
+          ]
+        },
+        {
+          "title": "Add account management endpoints",
+          "description": "",
+          "status": "Doing",
+          "subtasks": [
+            {
+              "title": "Upgrade plan",
+              "isCompleted": true
+            },
+            {
+              "title": "Cancel plan",
+              "isCompleted": true
+            },
+            {
+              "title": "Update payment method",
+              "isCompleted": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Done",
+      "tasks": [
+        {
+          "title": "Conduct 5 wireframe tests",
+          "description": "Ensure the layout continues to make sense and we have strong buy-in from potential users.",
+          "status": "Done",
+          "subtasks": [
+            {
+              "title": "Complete 5 wireframe prototype tests",
+              "isCompleted": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```

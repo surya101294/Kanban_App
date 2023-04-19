@@ -13,7 +13,7 @@ const Login = () => {
   const store = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (store.isAuth) {
       navigate("/");
@@ -23,10 +23,12 @@ const Login = () => {
   const handleChange = (e) => {
     setLog({ ...log, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = (e) => {
     dispatch(logFun(log));
     e.preventDefault();
   };
+
   return (
     <Box padding="50px">
       <form onSubmit={handleSubmit} style={{ width: "30%", margin: "auto" }}>

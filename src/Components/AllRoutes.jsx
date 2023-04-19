@@ -8,15 +8,15 @@ import PrivateRoute from './PrivateRoute'
 const AllRoutes = () => {
   return (
     <div>
-        <Routes>
-            <Route path='/' element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            } />
-            <Route path='/register' element={<Register/>} />
-            <Route path='/login' element={<Login/>} />
-        </Routes>
+      <Routes>
+        <Route path='/' element={
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        } />
+        <Route path='/register' element={<Register />} />
+        <Route path='/login' element={<Login />} />
+      </Routes>
     </div>
   )
 }
