@@ -1,8 +1,8 @@
-import { Box, Button, Checkbox, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Select, Text, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, Select} from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import Subtask from './Subtask'
 import { updatetaskApi } from '../Redux/api';
-import { EditIcon, SmallCloseIcon } from '@chakra-ui/icons';
+// import { EditIcon, SmallCloseIcon } from '@chakra-ui/icons';
 import { getBoardfun } from '../Redux/kanban/kanban.actions';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -45,7 +45,7 @@ const UpdateBox = ({ isOpen, overlay, onClose, selectedTask }) => {
             <form onSubmit={(e) => { e.preventDefault(); updateTask(); }}
               style={{ margin: "auto" }}>
               {selectedTask.subtask && selectedTask.subtask.map((el, i) => (
-                <Subtask subtaskArr={subtaskArr} setSubtaskArr={setSubtaskArr} index={i}  {...el} />
+                <Subtask subtaskArr={subtaskArr} setSubtaskArr={setSubtaskArr} index={i}  {...el} key={i} />
               ))}
               <Select m="5px 0px" onChange={handleChange} value={task.status} name="status">
                 <option value='Todo'>Todo</option>

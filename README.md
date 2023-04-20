@@ -1,8 +1,5 @@
 # Kanban Board (FullStack)
 
-# Backend Git hub link
-
-
 # TechStack
  # Front-End
 - HTML
@@ -15,9 +12,14 @@
 - Express
 - MongoDB
 
+# External Library- Chakra UI
+
 # Front-End Deployment - Vercel
 
 # Back-End Deployment - Cyclic 
+
+# Backend Git hub link: 
+https://github.com/surya101294/kanban_backend
 
 
 # `**Problem Statement**`

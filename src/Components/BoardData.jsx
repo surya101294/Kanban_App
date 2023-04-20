@@ -9,28 +9,28 @@ const BoardData = ({ id }) => {
   const [done, setDone] = useState([])
   const store = useSelector((state) => state.kanbanReducer);
 
-  id = id || store.boards[0]._id
-  let arr = store.boards.filter((el) => {
-    return el._id == id
+  id = id || store.boards[0]._id   //incase board div not selected then consider 1st Board
+  let arr = store.boards.filter((el) => {  //take the selective div out of the no. of boards 
+    return el._id === id
   })
-  let data = arr[0].tasks || []
-  if (arr[0].tasks) {
-    data = arr[0].tasks
-  }
+  let data = arr[0].tasks || [] // find the task in the selective board
+  // if (arr[0].tasks) {
+  //   data = arr[0].tasks
+  // }
 
 
   useEffect(() => {
     if (data) {
       let arr1 = data.filter((el) => {
-        return el.status == "Todo"
+        return el.status === "Todo"
       })
       setTodo(arr1)
       let arr2 = data.filter((el) => {
-        return el.status == "Doing"
+        return el.status === "Doing"
       })
       setDoing(arr2)
       let arr3 = data.filter((el) => {
-        return el.status == "Done"
+        return el.status === "Done"
       })
       setDone(arr3)
     }
@@ -60,7 +60,7 @@ const BoardData = ({ id }) => {
       <Box border="1px solid green" w="30%" >
         <Text>Done</Text>
         {done && done.map((el) => (
-          <Task task={el} />
+          <Task task={el} key={el.id} />
         ))}
         { }
       </Box>

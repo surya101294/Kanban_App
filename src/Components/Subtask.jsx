@@ -2,18 +2,21 @@ import React, { useEffect, useState } from 'react'
 import { EditIcon, SmallCloseIcon } from '@chakra-ui/icons'
 import { Box, Checkbox, Flex, Text } from '@chakra-ui/react'
 import { useDispatch } from 'react-redux'
+
 const Subtask = (props) => {
   const [status, setStatus] = useState(props.isCompleted)
   const dispatch = useDispatch()
   let arr = props.subtaskArr
+
   useEffect(() => {
-    arr[props.index].isCompleted = status
+    arr[props.index].isCompleted = status  // setting the arr
     props.setSubtaskArr(arr)
   }, [status])
 
   const handleStatus = (e) => {
     setStatus(e.target.checked)
   }
+
   return (
     <Flex border="1px solid #e6e6e6" justifyContent="space-between" margin="5px" width="95%" backgroundColor="white">
       <Checkbox padding="0px 10px" size='lg' colorScheme='purple' onChange={(e) => handleStatus(e)} isChecked={status} />

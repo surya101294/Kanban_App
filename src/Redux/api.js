@@ -1,7 +1,9 @@
 import axios from "axios"
 
-// -----------------------Kanban-------------------------------------------------------------
+// -----------------------base URL-------------------------------------------------------------
+
 const baseURL = `https://vast-pear-nightingale-sari.cyclic.app`
+
 // ------------------------GET----------------------------
 export const getBoardsApi = async () => {
     let res = await axios.get(`${baseURL}/getboard`, {
@@ -115,7 +117,7 @@ export const deletesubtaskApi = (taskid, subtaskid, payload) => {
             'Content-Type': 'application/json',
             'Authorization': localStorage.getItem("token")
         }
-    }
+    }   
     )
     return res
 }

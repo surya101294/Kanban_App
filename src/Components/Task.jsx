@@ -4,12 +4,13 @@ import UpdateBox from './UpdateBox'
 
 const Task = ({ task }) => {
 
-  const OverlayOne = () => (
-    
+  const OverlayOne = () => (   
     <ModalOverlay bg='blackAlpha.200' backdropFilter='blur(2px) hue-rotate(50deg)' />
   )
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [overlay, setOverlay] = React.useState(<OverlayOne />)
+ 
+ 
   let subtask = task.subtask
 
   return (
@@ -21,7 +22,7 @@ const Task = ({ task }) => {
         <Text fontWeight="500" >{task.title}</Text>
         <Box>
           {subtask && subtask.map((el) => (
-            <Text fontSize="12px" color="gray" >{el.title}</Text>
+            <Text fontSize="12px" color="gray" key={el.id} >{el.title} --- {el.isCompleted?"Completed":"Pending"} </Text>
           ))}
         </Box>
       </Box>

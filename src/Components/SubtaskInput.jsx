@@ -5,7 +5,7 @@ const SubtaskInput = ({ subtaskArr, setSubtaskArr }) => {
   const [status, setStatus] = useState(false)
   const [text, setText] = useState("")
   const handleClick = () => {
-    if (text != "") {
+    if (text !== "") {
       let arr = [...subtaskArr]
       arr.push({ title: text, isCompleted: status })
       setSubtaskArr(arr)

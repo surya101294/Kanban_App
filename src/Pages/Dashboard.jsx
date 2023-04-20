@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Select, Text, useDisclosure } from "@chakra-ui/react";
+import { Box, Button, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, Select, Text, useDisclosure } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,6 @@ import { getBoardfun } from "../Redux/kanban/kanban.actions";
 import BoardData from "../Components/BoardData";
 import SubtaskInput from "../Components/SubtaskInput";
 import Subtask from "../Components/Subtask";
-import UpdateBox from "../Components/UpdateBox";
 
 const Dashboard = () => {
   const store = useSelector((state) => state.kanbanReducer);
@@ -18,31 +17,33 @@ const Dashboard = () => {
   const [subtaskArr, setSubtaskArr] = useState([]);
   const [storeChanged, setStoreChanged] = useState(false);
   const [boardName, setBoardName] = useState("");
+
   const getBoards = () => {
     dispatch(getBoardfun());
     setStoreChanged(false);
   }
 
-
   // -----------------------------Add Board------------------------------------------
 
   const addboard = async (name) => {
-    if (name != "") {
+    if (name !== "") {
       let obj = {
         name: name,
         task: [],
         user: "",
       };
       setBoardName("")
-      console.log('obj:', obj)
+
       let result = await addboardApi(obj);
       getBoards()
     }
   };
-  // -----------------------------Selecte Board---------------------------------------------
+
+  // -----------------------------Selected Board----------------------------------------
 
   const handleDivClick = (divid) => setSelectedDiv(divid);
-  // -----------------------------Add Task to Selected Board---------------------------------------------
+
+  // -----------------------------Add Task to Selected Board---------------------------
   let initialTask = {
     title: "",
     description: "",
@@ -51,14 +52,15 @@ const Dashboard = () => {
   }
 
   const [task, setTask] = useState(initialTask);
+  
   const handleChange = (e) => {
     setTask({ ...task, [e.target.name]: e.target.value });
   };
 
   const addTask = async () => {
-    if (task != initialTask) {
+    if (task !== initialTask) {
       setTask({ ...task, subtask: subtaskArr })
-      let x = selectedDiv || data[0]._id
+      let x = selectedDiv || data[0]._id  //if order div not selected then it will take by default the first board (or operator consider truthy value)
       let result = await addtaskApi(x, task);
       setSubtaskArr([])
       getBoards()
@@ -67,7 +69,7 @@ const Dashboard = () => {
 
   // -----------------------------Overlay---------------------------------------------
 
-  const OverlayOne = () => (
+  const OverlayOne = () => (  //blur the back portion, after opening the modal
     <ModalOverlay
       bg='blackAlpha.200'
       backdropFilter='blur(2px) hue-rotate(50deg)'
@@ -92,7 +94,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Box align="end" padding="10px 50px" border="1px solid blue">
+      <Box align="end" padding="10px 50px" border="2px solid blue">
         <Button onClick={() => {
           setOverlay(<OverlayOne />)
           onOpen()
@@ -109,7 +111,7 @@ const Dashboard = () => {
                 <Input m="5px 0px" onChange={handleChange} name="description" type="text" placeholder="Description" />
                 <Box border="1px solid #e6e6e6">
                   {subtaskArr && subtaskArr.map((el) => (
-                    <Subtask {...el} />
+                    <Subtask {...el} key={el.id} />
                   ))}
                 </Box>
                 <SubtaskInput subtaskArr={subtaskArr} setSubtaskArr={setSubtaskArr} /> {/* Subtask Input */}
@@ -137,7 +139,7 @@ const Dashboard = () => {
             <Button type="submit" w="100%">Add New Board</Button>
           </form>
         </Box>
-        {data.length != 0 && <BoardData id={selectedDiv} />}
+        {data.length !== 0 && <BoardData id={selectedDiv} />}
       </Box>
     </div>
   );
@@ -145,27 +147,3 @@ const Dashboard = () => {
 
 export default Dashboard;
 
-//   // ------------------Board----------
-//   const handleBoardChange=(e)=>{
-//     setLog({...log,[e.target.name]:e.target.value})
-// }
-// const handleBoardSubmit=(e)=>{
-//     dispatch(logFun(log))
-//     e.preventDefault()
-// }
-//   // ------------------Task----------
-//   const handleTaskChange=(e)=>{
-//     setLog({...log,[e.target.name]:e.target.value})
-// }
-// const handleTaskSubmit=(e)=>{
-//     dispatch(logFun(log))
-//     e.preventDefault()
-// }
-//   // ------------------subtask----------
-//   const handlesubtaskChange=(e)=>{
-//     setLog({...log,[e.target.name]:e.target.value})
-// }
-// const handlesubtaskSubmit=(e)=>{
-//     dispatch(logFun(log))
-//     e.preventDefault()
-// }
